@@ -119,27 +119,27 @@
     ]
   };
 
-  geojson.features.forEach(function(marker) {
+geojson.features.forEach(function(marker) {
     const el = document.createElement('div');
     el.className = 'marker';
 
-const popupContent = `
-        <h3>${name}</h3>
-        <p><strong>Event:</strong> ${event}<br />
-           <strong>Date:</strong> ${date}<br />
-           <strong>Match:</strong> ${match}<br />
-           <strong>Score:</strong> ${score}</p>
-        <div class="popup-content">
-          <iframe src="https://www.youtube.com/embed/${youtubeVideoId || 'defaultVideoId'}" 
-                  frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-        </div>
-      `;
+    const popupContent = `
+      <h3>${marker.properties.name}</h3>
+      <p><strong>Event:</strong> ${marker.properties.event}<br />
+         <strong>Date:</strong> ${marker.properties.date}<br />
+         <strong>Match:</strong> ${marker.properties.match}<br />
+         <strong>Score:</strong> ${marker.properties.score}</p>
+      <div class="popup-content">
+        <iframe src="https://www.youtube.com/embed/${marker.properties.youtubeVideoId || 'defaultVideoId'}" 
+                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+      </div>
+    `;
 
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
-        .addTo(map);
-    });
-  </script>
+    new mapboxgl.Marker(el)
+      .setLngLat(marker.geometry.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
+      .addTo(map);
+  });
+</script>
 </body>
 </html>
