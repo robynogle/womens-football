@@ -20,13 +20,13 @@
 <div id="map"></div>
 
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWxndGhvYjA0dTAyaXIxM2FtYmIwZWkifQ.YrTqMrZWPoYFT-7Qrwfo8w'; 
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11', // Use a default style to avoid custom style issues
-    center: [10, 20], // starting position [lng, lat]
-    zoom: 2
-  });
+mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWk3MG9waDBkbXEybHE0OHd6ZDN1Z2cifQ.XONywsdZis9B8TeUG5Kjpw'; 
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11', // Use a default style
+  center: [10, 20],
+  zoom: 2
+});
 
   // GeoJSON data for stadiums
   const geojson = {
@@ -80,25 +80,24 @@
     ]
   };
 
-  // Add markers to the map using default Mapbox markers
   geojson.features.forEach(function(marker) {
-    const popupContent = `
-      <h3>${marker.properties.name}</h3>
-      <p><strong>Event:</strong> ${marker.properties.event}<br />
-         <strong>Date:</strong> ${marker.properties.date}<br />
-         <strong>Match:</strong> ${marker.properties.match}<br />
-         <strong>Score:</strong> ${marker.properties.score}</p>
-      <div class="popup-content">
-        <iframe src="https://www.youtube.com/embed/${marker.properties.youtubeVideoId || 'defaultVideoId'}" 
-                frameborder="0" allowfullscreen="allowfullscreen"></iframe>
-      </div>
-    `;
+  const popupContent = `
+    <h3>${marker.properties.name}</h3>
+    <p><strong>Event:</strong> ${marker.properties.event}<br />
+       <strong>Date:</strong> ${marker.properties.date}<br />
+       <strong>Match:</strong> ${marker.properties.match}<br />
+       <strong>Score:</strong> ${marker.properties.score}</p>
+    <div class="popup-content">
+      <iframe src="https://www.youtube.com/embed/${marker.properties.youtubeVideoId || 'defaultVideoId'}" 
+              frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+    </div>
+  `;
 
-    new mapboxgl.Marker()
-      .setLngLat(marker.geometry.coordinates)
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
-      .addTo(map);
-  });
+  new mapboxgl.Marker() // Default marker
+    .setLngLat(marker.geometry.coordinates)
+    .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
+    .addTo(map);
+});
 </script>
 </body>
 </html>
