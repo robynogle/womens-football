@@ -14,14 +14,6 @@
       width: 100%;
       height: 200px;
     }
-    .marker {
-      background-image: url('YOUR_MARKER_IMAGE_URL.png'); /* Replace with your image URL */
-      background-size: cover;
-      width: 30px; /* Adjust as needed */
-      height: 30px; /* Adjust as needed */
-      border-radius: 50%; /* Make it a circle */
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -29,15 +21,14 @@
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWxndGhvYjA0dTAyaXIxM2FtYmIwZWkifQ.YrTqMrZWPoYFT-7Qrwfo8w'; 
-
   const map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/robynogle/cm9i8xzvf000g01rmfqvn9rjd',
+    style: 'mapbox://styles/mapbox/streets-v11', // Use a default style to avoid custom style issues
     center: [10, 20], // starting position [lng, lat]
     zoom: 2
   });
 
-  // Embed GeoJSON directly:
+  // GeoJSON data for stadiums
   const geojson = {
     "type": "FeatureCollection",
     "features": [
@@ -85,44 +76,12 @@
           "youtubeVideoId": "wax6vu5B0pQ"
         },
         "geometry": { "type": "Point", "coordinates": [-0.2795, 51.556] }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "Stadium Australia",
-          "city": "Sydney",
-          "country": "Australia",
-          "sport": "Women's Soccer",
-          "date": "20th August 2023",
-          "match": "Spain vs England",
-          "event": "2023 Women’s World Cup Final",
-          "score": "1-0 (Spain won)",
-          "youtubeVideoId": "CdclTYu4hr4"
-        },
-        "geometry": { "type": "Point", "coordinates": [151.0634, -33.8474] }
-      },
-      {
-        "type": "Feature",
-        "properties": {
-          "name": "San Mamés Stadium",
-          "city": "Bilbao",
-          "country": "Spain",
-          "sport": "Women's Soccer",
-          "date": "26th May 2024",
-          "match": "Barcelona vs Lyon",
-          "event": "2023–2024 UEFA Women's Champions League Final",
-          "score": "2-0 (Barcelona won)",
-          "youtubeVideoId": "ERRbovFJNA4"
-        },
-        "geometry": { "type": "Point", "coordinates": [-2.9496, 43.2642] }
       }
     ]
   };
 
-geojson.features.forEach(function(marker) {
-    const el = document.createElement('div');
-    el.className = 'marker';
-
+  // Add markers to the map using default Mapbox markers
+  geojson.features.forEach(function(marker) {
     const popupContent = `
       <h3>${marker.properties.name}</h3>
       <p><strong>Event:</strong> ${marker.properties.event}<br />
@@ -135,7 +94,7 @@ geojson.features.forEach(function(marker) {
       </div>
     `;
 
-    new mapboxgl.Marker(el)
+    new mapboxgl.Marker()
       .setLngLat(marker.geometry.coordinates)
       .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
       .addTo(map);
