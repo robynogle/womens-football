@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Women's Soccer Stadiums Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    .popup-content iframe {
+      width: 100%;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWw1MnZ6cDAxNHUyanFpk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWw1MnZ6cDAxNHUyanF1bzIyNHg2NWIifQ.1bGFPWSOMW4bo5AV9Ymzbg1bzIyNHg2NWIifQ.1bGFPWSOMW4bo5AV9Ymzbg';
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [10, 20], // starting position [lng, lat]
+    zoom: 2
+  });
+
+  // Embed GeoJSON directly:
+  const geojson = {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Emirates Stadium",
+          "city": "London",
+          "country": "England",
+          "sport": "Women's Soccer",
+          "date": "16th February 2025",
+          "match": "Arsenal WFC vs Tottenham Women's",
+          "event": "North London Derby WSL",
+          "score": "5-0 to Arsenal",
+          "youtubeVideoId": "sMEGd95QdjU" // Placeholder video ID
+        },
+        "geometry": { "type": "Point", "coordinates": [-0.1086, 51.5549] }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Brisbane Stadium",
+          "city": "Brisbane",
+          "country": "Australia",
+          "sport": "Women's Soccer",
+          "date": "12th August 2023",
+          "match": "Matildas vs France",
+          "event": "2023 Women’s World Cup Quarter Final",
+          "score": "0-0 (7-6 on penalties – Matildas won)",
+          "youtubeVideoId": "XDEh7yQlZtc" // Placeholder video ID
+        },
+        "geometry": { "type": "Point", "coordinates": [153.0187, -27.4679] }
+      }
+            // Add more features as needed
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Wembley Stadium",
+          "city": "London",
+          "country": "England",
+          "sport": "Women's Soccer",
+          "date": "31st July 2022",
+          "match": "England vs Germany",
+          "event": "UEFA Women's Euro 2022 Final",
+          "score": "2-1 (England won)",
+          "youtubeVideoId": "wax6vu5B0pQ" // Placeholder video ID
+        },
+        "geometry": { "type": "Point", "coordinates": [-0.2795, 51.556] }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "Stadium Australia",
+          "city": "Sydney",
+          "country": "Australia",
+          "sport": "Women's Soccer",
+          "date": "20th August 2023",
+          "match": "Spain vs England",
+          "event": "2023 Women’s World Cup Final",
+          "score": "1-0 (Spain won)",
+          "youtubeVideoId": "CdclTYu4hr4" // Placeholder video ID
+        },
+        "geometry": { "type": "Point", "coordinates": [151.0634, -33.8474] }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "San Mamés Stadium",
+          "city": "Bilbao",
+          "country": "Spain",
+          "sport": "Women's Soccer",
+          "date": "26th May 2024",
+          "match": "Barcelona vs Lyon",
+          "event": "2023–2024 UEFA Women's Champions League Final",
+          "score": "2-0 (Barcelona won)",
+          "youtubeVideoId": "ERRbovFJNA4" // Placeholder video ID
+        },
+        "geometry": { "type": "Point", "coordinates": [-2.9496, 43.2642] }
+      }
+    ]
+  };
+
+  geojson.features.forEach(function(marker) {
+    const el = document.createElement('div');
+    el.className = 'marker';
+
+    // Validate marker data
+    const { name, event, date, match, score, youtubeVideoId } = marker.properties;
+    if (!name || !event || !date || !match || !score) {
+      console.error('Missing required properties for marker:', marker);
+      return;
+    }
+
+    const popupContent = `
+      <h3>${name}</h3>
+      <p><strong>Event:</strong> ${event}<br>
+         <strong>Date:</strong> ${date}<br>
+         <strong>Match:</strong> ${match}<br>
+         <strong>Score:</strong> ${score}</p>
+      <div class="popup-content">
+        <iframe src="https://www.youtube.com/embed/${youtubeVideoId || 'defaultVideoId'}" 
+                frameborder="0" allowfullscreen></iframe>
+      </div>
+    `;
+
+    new mapboxgl.Marker(el)
+      .setLngLat(marker.geometry.coordinates)
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent))
+      .addTo(map);
+  });
+</script>
+</body>
+</html>
