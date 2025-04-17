@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <title>Women's Soccer Stadiums Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
   <style>
@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <div id="map"></div>
+<div id="map"></div>
 
 <script>
   mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWw1MnZ6cDAxNHUyanF1bzIyNHg2NWIifQ.1bGFPWSOMW4bo5AV9Ymzbg';
@@ -28,7 +28,6 @@
     zoom: 2
   });
 
-  // Embed GeoJSON directly:
   const geojson = {
     "type": "FeatureCollection",
     "features": [
@@ -111,19 +110,14 @@
   };
 
   geojson.features.forEach(function(marker) {
-    console.log(marker); // Debug: Log each marker to ensure the loop is running
-
     const el = document.createElement('div');
     el.className = 'marker';
 
-    // Validate marker data
     const { name, event, date, match, score, youtubeVideoId } = marker.properties;
     if (!name || !event || !date || !match || !score) {
       console.error('Missing required properties for marker:', marker);
       return;
     }
-
-    console.log(`Creating marker for: ${name}`); // Debug: Log the name of the marker being created
 
     const popupContent = `
       <h3>${name}</h3>
@@ -136,7 +130,6 @@
                 frameborder="0" allowfullscreen></iframe>
       </div>
     `;
-    console.log(popupContent); // Debug: Log popup content to ensure it’s valid
 
     new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
@@ -144,3 +137,5 @@
       .addTo(map);
   });
 </script>
+</body>
+</html>
