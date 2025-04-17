@@ -19,14 +19,14 @@
 <div id="map"></div>
 
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWw1MnZ6cDAxNHUyanF1bzIyNHg2NWIifQ.1bGFPWSOMW4bo5AV9Ymzbg
+mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWw1MnZ6cDAxNHUyanF1bzIyNHg2NWIifQ.1bGFPWSOMW4bo5AV9Ymzbg';
 
-  const map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v11',
-    center: [10, 20], // starting position [lng, lat]
-    zoom: 2
-  });
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [10, 20], // starting position [lng, lat]
+  zoom: 2
+});
 
   // Embed GeoJSON directly:
   const geojson = {
