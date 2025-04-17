@@ -20,15 +20,16 @@
 <div id="map"></div>
 
 <script>
-mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWk3MG9waDBkbXEybHE0OHd6ZDN1Z2cifQ.XONywsdZis9B8TeUG5Kjpw'; 
-const map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v11', // Use a default style
-  center: [10, 20],
-  zoom: 2
-});
+  mapboxgl.accessToken = 'YOUR_NEW_ACCESS_TOKEN_HERE'; // Replace with a valid Mapbox token
 
-  // GeoJSON data for stadiums
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11', // Use a default style to avoid custom style issues
+    center: [10, 20], // starting position [lng, lat]
+    zoom: 2
+  });
+
+  // Updated GeoJSON data for stadiums
   const geojson = {
     "type": "FeatureCollection",
     "features": [
@@ -75,7 +76,7 @@ const map = new mapboxgl.Map({
           "score": "2-1 (England won)",
           "youtubeVideoId": "wax6vu5B0pQ"
         },
-         "geometry": { "type": "Point", "coordinates": [-0.2795, 51.556] }
+        "geometry": { "type": "Point", "coordinates": [-0.2795, 51.556] }
       },
       {
         "type": "Feature",
