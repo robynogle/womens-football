@@ -1,0 +1,65 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww34000\viewh21380\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html>\
+<head>\
+  <meta charset="utf-8">\
+  <title>Women's Soccer Stadiums Map</title>\
+  <meta name="viewport" content="width=device-width, initial-scale=1">\
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>\
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />\
+  <style>\
+    body \{ margin: 0; padding: 0; \}\
+    #map \{ position: absolute; top: 0; bottom: 0; width: 100%; \}\
+    .popup-content iframe \{\
+      width: 100%;\
+      height: 200px;\
+    \}\
+  </style>\
+</head>\
+<body>\
+<div id="map"></div>\
+\
+<script>\
+  mapboxgl.accessToken = pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWk3MG9waDBkbXEybHE0OHd6ZDN1Z2cifQ.XONywsdZis9B8TeUG5Kjpw';\
+\
+  const map = new mapboxgl.Map(\{\
+    container: 'map',\
+    style: 'mapbox://styles/mapbox/streets-v11',\
+    center: [10, 20], // starting position [lng, lat]\
+    zoom: 2\
+  \});\
+\
+  // Embed GeoJSON directly:\
+  const geojson = \{"type": "FeatureCollection", "features": [\{"type": "Feature", "properties": \{"name": "Emirates Stadium", "city": "London", "country": "England", "sport": "Women's Soccer", "date": "16th February 2025", "match": "Arsenal WFC vs Tottenham Women's", "event": "North London Derby WSL", "score": "5-0 to Arsenal"\}, "geometry": \{"type": "Point", "coordinates": [-0.1086, 51.5549]\}\}, \{"type": "Feature", "properties": \{"name": "Brisbane Stadium", "city": "Brisbane", "country": "Australia", "sport": "Women's Soccer", "date": "12th August 2023", "match": "Matildas vs France", "event": "2023 Women\\u2019s World Cup Quarter Final", "score": "0-0 (7-6 on penalties \\u2013 Matildas won)"\}, "geometry": \{"type": "Point", "coordinates": [153.0187, -27.4679]\}\}, \{"type": "Feature", "properties": \{"name": "Wembley Stadium", "city": "London", "country": "England", "sport": "Women's Soccer", "date": "31st July 2022", "match": "England vs Germany", "event": "UEFA Women's Euro 2022 Final", "score": "2-1 (England won)"\}, "geometry": \{"type": "Point", "coordinates": [-0.2795, 51.556]\}\}, \{"type": "Feature", "properties": \{"name": "Stadium Australia", "city": "Sydney", "country": "Australia", "sport": "Women's Soccer", "date": "20th August 2023", "match": "Spain vs England", "event": "2023 Women\\u2019s World Cup Final", "score": "1-0 (Spain won)"\}, "geometry": \{"type": "Point", "coordinates": [151.0634, -33.8474]\}\}, \{"type": "Feature", "properties": \{"name": "San Mam\\u00e9s Stadium", "city": "Bilbao", "country": "Spain", "sport": "Women's Soccer", "date": "26th May 2024", "match": "Barcelona vs Lyon", "event": "2023\\u20132024 UEFA Women's Champions League Final", "score": "2-0 (Barcelona won)"\}, "geometry": \{"type": "Point", "coordinates": [-2.9496, 43.2642]\}\}]\}\
+\
+  geojson.features.forEach(function(marker) \{\
+    const el = document.createElement('div');\
+    el.className = 'marker';\
+\
+    const popupContent = `\
+      <h3>$\{marker.properties.name\}</h3>\
+      <p><strong>Event:</strong> $\{marker.properties.event\}<br>\
+         <strong>Date:</strong> $\{marker.properties.date\}<br>\
+         <strong>Match:</strong> $\{marker.properties.match\}<br>\
+         <strong>Score:</strong> $\{marker.properties.score\}</p>\
+      <div class="popup-content">\
+        <iframe src="https://www.youtube.com/embed/$\{marker.properties.youtubeVideoId\}" \
+                frameborder="0" allowfullscreen></iframe>\
+      </div>\
+    `;\
+\
+    new mapboxgl.Marker(el)\
+      .setLngLat(marker.geometry.coordinates)\
+      .setPopup(new mapboxgl.Popup(\{ offset: 25 \}).setHTML(popupContent))\
+      .addTo(map);\
+  \});\
+</script>\
+</body>\
+</html>\
+}
