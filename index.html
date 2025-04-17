@@ -19,7 +19,7 @@
 <div id="map"></div>
 
 <script>
-  mapboxgl.accessToken = 'pk.eyJ1Ijoicm9ieW5vZ2xlIiwiYSI6ImNtOWxndGhvYjA0dTAyaXIxM2FtYmIwZWkifQ.YrTqMrZWPoYFT-7Qrwfo8w';
+  mapboxgl.accessToken = 'your-new-public-token'; // Replace with your new public token
 
   const map = new mapboxgl.Map({
     container: 'map',
@@ -27,8 +27,8 @@
     center: [10, 20], // starting position [lng, lat]
     zoom: 2
   });
+  console.log('Map initialized:', map); // Debug: Log the map object
 
-  // Embed GeoJSON directly:
   const geojson = {
     "type": "FeatureCollection",
     "features": [
@@ -46,7 +46,8 @@
           "youtubeVideoId": "sMEGd95QdjU"
         },
         "geometry": { "type": "Point", "coordinates": [-0.1086, 51.5549] }
-      },
+      }
+    },
       {
         "type": "Feature",
         "properties": {
@@ -110,22 +111,21 @@
     ]
   };
 
+  console.log('GeoJSON features:', geojson.features); // Debug: Log the GeoJSON features array
+
   geojson.features.forEach(function(marker) {
-    console.log(marker); // Debug: Log each marker to ensure the loop is running
+    console.log('Processing marker:', marker); // Debug: Log each marker
 
     const el = document.createElement('div');
     el.className = 'marker';
 
-    // Validate marker data
     const { name, event, date, match, score, youtubeVideoId } = marker.properties;
     if (!name || !event || !date || !match || !score) {
       console.error('Missing required properties for marker:', marker);
       return;
     }
-
-    console.log(`Creating marker for: ${name}`); // Debug: Log the name of the marker being created
-
     const popupContent = `
+      const popupContent = `
       <h3>${name}</h3>
       <p><strong>Event:</strong> ${event}<br>
          <strong>Date:</strong> ${date}<br>
@@ -136,7 +136,7 @@
                 frameborder="0" allowfullscreen></iframe>
       </div>
     `;
-    console.log(popupContent); // Debug: Log popup content to ensure it’s valid
+    console.log('Popup content:', popupContent); // Debug: Log popup content
 
     new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
@@ -144,3 +144,5 @@
       .addTo(map);
   });
 </script>
+</body>
+</html>
